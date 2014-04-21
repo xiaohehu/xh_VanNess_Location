@@ -1539,6 +1539,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "xh_VanNess_Location/xh_VanNess_Location-Prefix.pch";
 				INFOPLIST_FILE = "xh_VanNess_Location/xh_VanNess_Location-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1552,6 +1553,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "xh_VanNess_Location/xh_VanNess_Location-Prefix.pch";
 				INFOPLIST_FILE = "xh_VanNess_Location/xh_VanNess_Location-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1616,6 +1618,7 @@
 				821DE2C11902D2D7005F8B5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		821DE2C21902D2D7005F8B5E /* Build configuration list for PBXNativeTarget "xh_VanNess_LocationTests" */ = {
 			isa = XCConfigurationList;
@@ -1624,6 +1627,7 @@
 				821DE2C41902D2D7005F8B5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
