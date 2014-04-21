@@ -51,6 +51,7 @@
     NSLog(@"Back to the root");
     [_locationVC removeFromParentViewController];
     [_locationVC.view removeFromSuperview];
+    _uib_loadBtn.userInteractionEnabled = YES;
 }
 
 -(void)loadMapView {
@@ -58,6 +59,7 @@
     _locationVC = [[neighborhoodViewController alloc] initWithNibName:@"neighborhoodViewController" bundle:nil];
     [self addChildViewController:_locationVC];
     [self.view insertSubview:_locationVC.view belowSubview:_uiv_btnContainer];
+    _uib_loadBtn.userInteractionEnabled = NO;
 }
 
 - (void)didReceiveMemoryWarning
