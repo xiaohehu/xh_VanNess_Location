@@ -133,7 +133,7 @@ static float kClosedMenu_W = 40.0;
     _dict_hotspots = [[NSDictionary alloc] initWithContentsOfFile:path];
     
 	// Do any additional setup after loading the view, typically from a nib.
-    _arr_cellName = [[NSMutableArray alloc] initWithObjects:@"DRIVING DIRECTION", @"PARKING", @"PUBLIC TRANSIT", @"RETAIL", @"DINING", @"RESIDENTIAL / HOTELS", @"HOTSPOTS", nil];
+    _arr_cellName = [[NSMutableArray alloc] initWithObjects:@"STATIONS", @"PARKING GARAGES", @"SYSTEM", @"RETAIL", @"DINING", @"RESIDENTIAL / HOTELS", @"HOTSPOTS", @"HOTSPOTS2",nil];
     [self initVC];
 //    _uiiv_bgImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location_bg.jpg"]];
 //    [self.view addSubview: _uiiv_bgImg];
@@ -942,7 +942,7 @@ static float kClosedMenu_W = 40.0;
     [theCollapseClick closeCollapseClickCellsWithIndexes:_arr_cellName animated:NO];
     [theCollapseClick closeCellResize];
     [_arr_cellName removeAllObjects];
-    _arr_cellName = [[NSMutableArray alloc] initWithObjects:@"DRIVING DIRECTION", @"PARKING", @"PUBLIC TRANSIT", @"RETAIL", @"DINING", @"RESIDENTIAL/HOTELS", @"HOTSPOTS", nil];
+    _arr_cellName = [[NSMutableArray alloc] initWithObjects:@"STATIONS", @"PARKING GARAGES", @"SYSTEM", @"RETAIL", @"DINING", @"RESIDENTIAL/HOTELS", @"HOTSPOTS", @"HOTSPOTS2", nil];
     theCollapseClick.CollapseClickDelegate = self;
     [theCollapseClick reloadCollapseClick];
     _uib_city.userInteractionEnabled = YES;
@@ -968,7 +968,7 @@ static float kClosedMenu_W = 40.0;
     }
     else{
         //        _uiv_collapseContainer.frame = CGRectMake(0.0f, (768-kCCHeaderHeight*(3+1))/2, container_W, kCCHeaderHeight*(3+1));
-        [self resizeCollapseContainer:8];
+        [self resizeCollapseContainer:9];
         [_uiv_collapseContainer setBackgroundColor:[UIColor clearColor]];
         return (int)_arr_cellName.count;
     }
@@ -1198,6 +1198,7 @@ static float kClosedMenu_W = 40.0;
     for (UIView *tmp in _arr_hotsopts) {
         [tmp removeFromSuperview];
     }
+    
     [_uiv_directionDot removeFromSuperview];
     [_uiiv_overlays removeFromSuperview];
     [self reloadTableViewAtIndex:index];
@@ -1228,6 +1229,10 @@ static float kClosedMenu_W = 40.0;
         _uib_yawKey.hidden = YES;
         _uib_armyCorp.hidden = YES;
         
+        if ((index == 6) || (index == 7)) {
+            [_uis_zoomingMap zoomToPoint:self.view.center withScale:1.0 animated:YES];
+        }
+        
         _uiv_closedMenuContainer.frame = CGRectMake(-41.0, _uiv_collapseContainer.frame.origin.y, 41.0, _uiv_collapseContainer.frame.size.height);
         [self initCellNameLabel:test];
         _uiv_closeMenuSideBar.backgroundColor = [self colorForTitleSideBarAtIndex:index];
@@ -1256,6 +1261,7 @@ static float kClosedMenu_W = 40.0;
                     _vanness_Parking_Hotspot.hidden = YES;
                     _arr_hotspotsData = [NSMutableArray arrayWithArray:[_dict_hotspots objectForKey:@"universities"] ];
                     [self initHotspots];
+                    [_uis_zoomingMap resetPinSize];
                     NSLog(@"The tapped index is %i", index);
                     break;
                 }
@@ -1294,6 +1300,7 @@ static float kClosedMenu_W = 40.0;
                     _vanness_Parking_Hotspot.hidden = NO;
                     _arr_hotspotsData = [NSMutableArray arrayWithArray:[_dict_hotspots objectForKey:@"parking"] ];
                     [self initHotspots];
+                    [_uis_zoomingMap resetPinSize];
                     NSLog(@"The tapped index is %i", index);
                     break;
                 }
@@ -1304,6 +1311,7 @@ static float kClosedMenu_W = 40.0;
                     _uis_zoomingMap.blurView.image = [UIImage imageNamed:@"location_T_lines.jpg"];
                     _arr_hotspotsData = [NSMutableArray arrayWithArray:[_dict_hotspots objectForKey:@"transit"] ];
                     [self initHotspots];
+                    [_uis_zoomingMap resetPinSize];
                     NSLog(@"The tapped index is %i", index);
                     break;
                 }
@@ -1313,6 +1321,7 @@ static float kClosedMenu_W = 40.0;
                     _vanness_Parking_Hotspot.hidden = YES;
                     _arr_hotspotsData = [NSMutableArray arrayWithArray:[_dict_hotspots objectForKey:@"retail"] ];
                     [self initHotspots];
+                    [_uis_zoomingMap resetPinSize];
                     NSLog(@"The tapped index is %i", index);
                     break;
                 }
@@ -1322,6 +1331,7 @@ static float kClosedMenu_W = 40.0;
                     _vanness_Parking_Hotspot.hidden = YES;
                     _arr_hotspotsData = [NSMutableArray arrayWithArray:[_dict_hotspots objectForKey:@"dining"] ];
                     [self initHotspots];
+                    [_uis_zoomingMap resetPinSize];
                     NSLog(@"The tapped index is %i", index);
                     break;
                 }
@@ -1331,14 +1341,36 @@ static float kClosedMenu_W = 40.0;
                     _vanness_Parking_Hotspot.hidden = YES;
                     _arr_hotspotsData = [NSMutableArray arrayWithArray:[_dict_hotspots objectForKey:@"residential"] ];
                     [self initHotspots];
+                    [_uis_zoomingMap resetPinSize];
                     NSLog(@"The tapped index is %i", index);
                     break;
                 }
                 case 6:
                 {
+                    [self initTappleHotspots];
+                    CGPoint point = CGPointMake(500, 600);
+                    double delayInSeconds1 = 0.5f;
+                    dispatch_time_t popTime1 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds1 * NSEC_PER_SEC);
+                    dispatch_after(popTime1, dispatch_get_main_queue(), ^(void){
+                        [_uis_zoomingMap zoomToPoint:point withScale:2.0 animated:YES];
+                    });
+                    [_uis_zoomingMap resetPinSize];
+                    break;
+                }
+                case 7:
+                {
                     NSLog(@"The last one is tapped");
                     [self initTappleHotspots];
+                    CGPoint point = CGPointMake(200, 200);
+                    double delayInSeconds1 = 0.5f;
+                    dispatch_time_t popTime1 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds1 * NSEC_PER_SEC);
+                    dispatch_after(popTime1, dispatch_get_main_queue(), ^(void){
+                        [_uis_zoomingMap zoomToPoint:point withScale:2.0 animated:YES];
+                    });
+                    [_uis_zoomingMap resetPinSize];
+                    break;
                 }
+
                 default:
                     break;
             }

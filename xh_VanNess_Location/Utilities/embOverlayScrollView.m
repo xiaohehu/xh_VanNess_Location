@@ -10,7 +10,7 @@
 
 @interface embOverlayScrollView () <UIScrollViewDelegate>
 
-@property (nonatomic, strong, readonly) UIScrollView *scrollView;
+
 @end
 
 @implementation embOverlayScrollView
@@ -284,6 +284,40 @@
 					 }];
 }
 
+- (void)zoomToPoint:(CGPoint)zoomPoint withScale: (CGFloat)scale animated: (BOOL)animated
+{
+    //Normalize current content size back to content scale of 1.0f
+    CGSize contentSize;
+    contentSize.width = (_scrollView.contentSize.width / _scrollView.zoomScale);
+    contentSize.height = (_scrollView.contentSize.height / _scrollView.zoomScale);
+    
+    //translate the zoom point to relative to the content rect
+    zoomPoint.x = (zoomPoint.x / self.bounds.size.width) * contentSize.width;
+    zoomPoint.y = (zoomPoint.y / self.bounds.size.height) * contentSize.height;
+    
+    //derive the size of the region to zoom to
+    CGSize zoomSize;
+    zoomSize.width = self.bounds.size.width / scale;
+    zoomSize.height = self.bounds.size.height / scale;
+    
+    //offset the zoom rect so the actual zoom point is in the middle of the rectangle
+    CGRect zoomRect;
+    zoomRect.origin.x = zoomPoint.x - zoomSize.width / 2.0f;
+    zoomRect.origin.y = zoomPoint.y - zoomSize.height / 2.0f;
+    zoomRect.size.width = zoomSize.width;
+    zoomRect.size.height = zoomSize.height;
+    
+    //apply the resize
+    [_scrollView zoomToRect: zoomRect animated: animated];
+}
+
+- (void)resetPinSize {
+    for (UIView *dropPinView in _blurView.subviews) {
+        CGRect oldFrame = dropPinView.frame;
+        dropPinView.frame = oldFrame;
+        dropPinView.transform = CGAffineTransformMakeScale(1.0/_scrollView.zoomScale, 1.0/_scrollView.zoomScale);
+    }
+}
 #pragma mark - Delegate methods 
 -(void)didRemove {
     // send message the message to the delegate!
