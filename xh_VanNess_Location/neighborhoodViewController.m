@@ -95,6 +95,7 @@ static float kClosedMenu_W = 40.0;
 @property (nonatomic, strong) NSDictionary                  *dict_hotspotDict;
 @property (nonatomic, strong) NSMutableArray                *arr_tapHotspotArray;
 @property (nonatomic, strong) NSMutableArray                *arr_tapHotspots;
+
 @end
 
 @implementation neighborhoodViewController
@@ -1188,7 +1189,7 @@ static float kClosedMenu_W = 40.0;
 }
 -(void)didClickCollapseClickCellAtIndex:(int)index isNowOpen:(BOOL)open;
 {
-	if (isCity) {
+    if (isCity) {
         _uis_zoomingMap.blurView.image = [UIImage imageNamed:@"city_map.png"];
     }
     else
@@ -1229,9 +1230,10 @@ static float kClosedMenu_W = 40.0;
         _uib_yawKey.hidden = YES;
         _uib_armyCorp.hidden = YES;
         
-        if ((index == 6) || (index == 7)) {
-            [_uis_zoomingMap zoomToPoint:self.view.center withScale:1.0 animated:YES];
-        }
+//        if ((index == 6) || (index == 7)) {
+//            CGRect theRect = CGRectMake(0, 0, 1024, 768);
+//            [_uis_zoomingMap zoomToRect:theRect animated:YES duration:2.5];
+//        }
         
         _uiv_closedMenuContainer.frame = CGRectMake(-41.0, _uiv_collapseContainer.frame.origin.y, 41.0, _uiv_collapseContainer.frame.size.height);
         [self initCellNameLabel:test];
@@ -1348,26 +1350,37 @@ static float kClosedMenu_W = 40.0;
                 case 6:
                 {
                     [self initTappleHotspots];
-                    CGPoint point = CGPointMake(322, 601);
-                    double delayInSeconds1 = 0.5f;
-                    dispatch_time_t popTime1 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds1 * NSEC_PER_SEC);
-                    dispatch_after(popTime1, dispatch_get_main_queue(), ^(void){
-                        [_uis_zoomingMap zoomToPoint:point withScale:3.3 animated:YES];
-                    });
                     [_uis_zoomingMap resetPinSize];
+                    CGRect theRect = CGRectMake(168, 486, 307, 230);
+                    NSValue * value = [NSValue valueWithCGRect:theRect];
+                    if (_uis_zoomingMap.scrollView.zoomScale > 1.0) {
+                        [_uis_zoomingMap zoomToRect:self.view.bounds animated:YES duration:2.5];
+                        [self performSelector:@selector(zoomInRect:) withObject:value afterDelay:2.6];
+                    }
+                    else {
+                        [self performSelector:@selector(zoomInRect:) withObject:value afterDelay:0.0];
+                    }
+                    
                     break;
                 }
                 case 7:
                 {
                     NSLog(@"The last one is tapped");
                     [self initTappleHotspots];
-                    CGPoint point = CGPointMake(576, 226);
-                    double delayInSeconds1 = 0.5f;
-                    dispatch_time_t popTime1 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds1 * NSEC_PER_SEC);
-                    dispatch_after(popTime1, dispatch_get_main_queue(), ^(void){
-                        [_uis_zoomingMap zoomToPoint:point withScale:1.8 animated:YES];
-                    });
                     [_uis_zoomingMap resetPinSize];
+                   CGRect theRect = CGRectMake(289, 11, 574, 430);
+                    NSValue * value = [NSValue valueWithCGRect:theRect];
+                    
+                    if (_uis_zoomingMap.scrollView.zoomScale > 1.0) {
+                        [_uis_zoomingMap zoomToRect:self.view.bounds animated:YES duration:2.5];
+                        
+                        [self performSelector:@selector(zoomInRect:) withObject:value afterDelay:2.6];
+                    }
+                    else {
+                        [self performSelector:@selector(zoomInRect:) withObject:value afterDelay:0.0];
+                    }
+                    
+                    
                     break;
                 }
 
@@ -1378,6 +1391,12 @@ static float kClosedMenu_W = 40.0;
     }
     
     [self removeAllHelpViews];
+}
+
+-(void)zoomInRect:(NSValue *)rect {
+    CGRect theRect = [rect CGRectValue];
+    [_uis_zoomingMap zoomToRect:theRect animated:YES duration:2.5];
+    [_uis_zoomingMap resetPinSize];
 }
 
 #pragma mark - Tappable Hotspots Setting

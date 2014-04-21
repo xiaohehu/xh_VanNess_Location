@@ -24,6 +24,7 @@
 - (id)initWithFrame:(CGRect)frame image:(UIImage*)thisImage overlay:(NSString*)secondImage shouldZoom:(BOOL)zoomable;
 - (void)zoomToPoint:(CGPoint)zoomPoint withScale: (CGFloat)scale animated: (BOOL)animated;
 - (void)resetPinSize;
+- (void)zoomToRect:(CGRect)rect animated:(BOOL)animated duration:(float)duration;
 @property (assign) BOOL canZoom;
 @property (nonatomic, strong) NSString *overlay;
 @property (nonatomic, strong) UIImage *firstImg;

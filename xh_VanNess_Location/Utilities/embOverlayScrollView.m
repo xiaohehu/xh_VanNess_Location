@@ -345,4 +345,15 @@
     NSLog(@"\n\n x:%f \ny:%f \nwidth:%f \nheight:%f", visibleRect.origin.x,visibleRect.origin.y, visibleRect.size.width, visibleRect.size.height);
 }
 
+- (void)zoomToRect:(CGRect)rect animated:(BOOL)animated duration:(float)duration
+{
+    [UIView animateWithDuration:(animated?duration:0.0f)
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         [_scrollView zoomToRect:rect animated:NO];
+                     }
+                     completion:nil];
+}
+
 @end
