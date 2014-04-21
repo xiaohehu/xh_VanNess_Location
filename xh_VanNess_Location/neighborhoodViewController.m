@@ -1348,11 +1348,11 @@ static float kClosedMenu_W = 40.0;
                 case 6:
                 {
                     [self initTappleHotspots];
-                    CGPoint point = CGPointMake(500, 600);
+                    CGPoint point = CGPointMake(322, 601);
                     double delayInSeconds1 = 0.5f;
                     dispatch_time_t popTime1 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds1 * NSEC_PER_SEC);
                     dispatch_after(popTime1, dispatch_get_main_queue(), ^(void){
-                        [_uis_zoomingMap zoomToPoint:point withScale:2.0 animated:YES];
+                        [_uis_zoomingMap zoomToPoint:point withScale:3.3 animated:YES];
                     });
                     [_uis_zoomingMap resetPinSize];
                     break;
@@ -1361,11 +1361,11 @@ static float kClosedMenu_W = 40.0;
                 {
                     NSLog(@"The last one is tapped");
                     [self initTappleHotspots];
-                    CGPoint point = CGPointMake(200, 200);
+                    CGPoint point = CGPointMake(576, 226);
                     double delayInSeconds1 = 0.5f;
                     dispatch_time_t popTime1 = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds1 * NSEC_PER_SEC);
                     dispatch_after(popTime1, dispatch_get_main_queue(), ^(void){
-                        [_uis_zoomingMap zoomToPoint:point withScale:2.0 animated:YES];
+                        [_uis_zoomingMap zoomToPoint:point withScale:1.8 animated:YES];
                     });
                     [_uis_zoomingMap resetPinSize];
                     break;

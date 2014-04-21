@@ -339,5 +339,10 @@
     }
 }
 
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSLog(@"\n\n The zoom scale is %f", _scrollView.zoomScale);
+    CGRect visibleRect = [_scrollView convertRect:scrollView.bounds toView:_blurView];
+    NSLog(@"\n\n %f \n%f \n%f \n%f", visibleRect.origin.x,visibleRect.origin.y, visibleRect.size.width, visibleRect.size.height);
+}
 
 @end

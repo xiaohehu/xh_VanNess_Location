@@ -28,7 +28,7 @@
 -(void)initControlBtns
 {
     _uiv_btnContainer = [[UIView alloc] initWithFrame:CGRectMake(412.0, 728.0, 200.0, 40.0)];
-    _uiv_btnContainer.backgroundColor = [UIColor whiteColor];
+    _uiv_btnContainer.backgroundColor = [UIColor clearColor];
     [self.view addSubview: _uiv_btnContainer];
     
     _uib_backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
